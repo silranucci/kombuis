@@ -1,6 +1,14 @@
 {
+    "version": "0.0.0",
     "type": "project",
     "license": "proprietary",
+    "authors": [
+        {
+            "name": "Silvestro Ranucci",
+            "email": "silvestroran@gmail.com",
+            "role": "developer"
+        }
+    ],
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
