@@ -1,5 +1,10 @@
 @import '~bootstrap';
 
 body {
-    background-color: black;
+    background-color: ghostwhite;
+}
+
+.navbar-brand{
+    font-family: "Source Sans Variable", "Helvetica Neue", helvetica, "Apple Color Emoji", arial, sans-serif;
+    color: darkblue;
 }
