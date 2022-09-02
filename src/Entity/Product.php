@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
@@ -27,6 +29,14 @@ class Product
 
     #[ORM\Column(nullable: true)]
     private ?int $DaysIsGoodAfterOpening = null;
+
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductItem::class)]
+    private Collection $productItems;
+
+    public function __construct()
+    {
+        $this->productItems = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +99,36 @@ class Product
     public function setDaysIsGoodAfterOpening(?int $DaysIsGoodAfterOpening): self
     {
         $this->DaysIsGoodAfterOpening = $DaysIsGoodAfterOpening;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductItem>
+     */
+    public function getProductItems(): Collection
+    {
+        return $this->productItems;
+    }
+
+    public function addProductItem(ProductItem $productItem): self
+    {
+        if (!$this->productItems->contains($productItem)) {
+            $this->productItems->add($productItem);
+            $productItem->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductItem(ProductItem $productItem): self
+    {
+        if ($this->productItems->removeElement($productItem)) {
+            // set the owning side to null (unless already changed)
+            if ($productItem->getProduct() === $this) {
+                $productItem->setProduct(null);
+            }
+        }
 
         return $this;
     }
