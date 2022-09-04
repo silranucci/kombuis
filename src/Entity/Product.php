@@ -28,7 +28,7 @@ class Product
     private ?int $TotalQuantity = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $DaysIsGoodAfterOpening = null;
+    private ?\DateInterval $DaysIsGoodAfterOpening = null;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductItem::class)]
     private Collection $productItems;
@@ -91,12 +91,12 @@ class Product
         return $this;
     }
 
-    public function getDaysIsGoodAfterOpening(): ?int
+    public function getDaysIsGoodAfterOpening(): ?\DateInterval
     {
         return $this->DaysIsGoodAfterOpening;
     }
 
-    public function setDaysIsGoodAfterOpening(?int $DaysIsGoodAfterOpening): self
+    public function setDaysIsGoodAfterOpening(?\DateInterval $DaysIsGoodAfterOpening): self
     {
         $this->DaysIsGoodAfterOpening = $DaysIsGoodAfterOpening;
 

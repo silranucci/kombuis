@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ProductItemRepository;
+use Cassandra\Date;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -35,7 +36,7 @@ class ProductItem
     #[ORM\JoinColumn(nullable: false)]
     private ?Shelf $shelf = null;
 
-    /*
+
     public function __construct(\DateTime $useByDates, int $quantity, Product $product, Shelf $shelf)
     {
         $this->useByDates = $useByDates;
@@ -43,7 +44,7 @@ class ProductItem
         $this->product = $product;
         $this->shelf = $shelf;
     }
-    */
+
 
     public function getId(): ?int
     {
@@ -108,6 +109,17 @@ class ProductItem
         $this->shelf = $shelf;
 
         return $this;
+    }
+
+    public function isItemStillGood(): bool
+    {
+        $todayDate = new \DateTime();
+        if($this->openingDate->diff(new \DateTime()) <  $todayDate->add($this->getProduct()->getDaysIsGoodAfterOpening()))
+        {
+            return true;
+        };
+
+        return false;
     }
 
 }
