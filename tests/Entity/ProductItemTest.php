@@ -14,25 +14,32 @@ class ProductItemTest extends TestCase
     public function testProductItemIsStillGoodAfterOpening()
     {
         $dt = new \DateTime();
-        $product = new Product();
-        $shelf = new Shelf();
-        $productItem = new ProductItem($dt->setDate(2022, 01, 01), 200, $product, $shelf);
+        $productItem = new ProductItem($dt->setDate(2022, 01, 01), 200, new Product(), new Shelf());
 
         $productItem->getProduct()->setDaysIsGoodAfterOpening(\DateInterval::createFromDateString('15 day'));
-        $productItem->setOpeningDate($dt->setDate(2022,01,30));
+        $productItem->setOpeningDate($dt->setDate(2022, 01, 30));
 
-         $this->assertSame(false, $productItem->isItemStillGood());
+        $this->assertFalse($productItem->isItemStillGood());
     }
 
-    /*
-    public function testIsStillGood(): bool
+    public function testIsItemExpired()
     {
-        $productItem = new ProductItem();
-        $currentDate = date('d-m-y');
+        $dt = new \DateTime();
+        $productItem = new ProductItem($dt->setDate(2022, 01, 01), 200, new Product(), new Shelf());
 
-        $productItem->setUseByDates(\DateTime::createFromFormat('d-m-y', '01-01-22'));
-
-        $this->assertSame(false, $productItem->isStillGood())
+        $this->assertTrue($productItem->isItemExpired());
     }
-    */
+
+    public function testIsItemOver()
+    {
+        $productItem = new ProductItem(new \DateTime(), 0, new Product(), new Shelf());
+
+        $this->assertTrue($productItem->isItemOver());
+
+        $productItem->setQuantity(200);
+
+        $this->assertFalse($productItem->isItemOver());
+    }
+
+
 }

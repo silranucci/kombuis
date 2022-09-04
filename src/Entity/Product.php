@@ -16,19 +16,16 @@ class Product
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $Barcode = null;
+    private ?int $barcode = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $Name = null;
+    private ?string $name = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $Brand = null;
-
-    #[ORM\Column]
-    private ?int $TotalQuantity = null;
+    private ?string $brand = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateInterval $DaysIsGoodAfterOpening = null;
+    private ?\DateInterval $daysIsGoodAfterOpening = null;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductItem::class)]
     private Collection $productItems;
@@ -45,48 +42,36 @@ class Product
 
     public function getBarcode(): ?int
     {
-        return $this->Barcode;
+        return $this->barcode;
     }
 
-    public function setBarcode(int $Barcode): self
+    public function setBarcode(int $barcode): self
     {
-        $this->Barcode = $Barcode;
+        $this->barcode = $barcode;
 
         return $this;
     }
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getBrand(): ?string
     {
-        return $this->Brand;
+        return $this->brand;
     }
 
-    public function setBrand(string $Brand): self
+    public function setBrand(string $brand): self
     {
-        $this->Brand = $Brand;
-
-        return $this;
-    }
-
-    public function getTotalQuantity(): ?int
-    {
-        return $this->TotalQuantity;
-    }
-
-    public function setTotalQuantity(int $TotalQuantity): self
-    {
-        $this->TotalQuantity = $TotalQuantity;
+        $this->brand = $brand;
 
         return $this;
     }
@@ -131,5 +116,22 @@ class Product
         }
 
         return $this;
+    }
+
+    public function getTotalQuantity(): int
+    {
+        $productItemsArray = $this->getProductItems()->toArray();
+        $totalQuantity = 0;
+
+        foreach ($productItemsArray as $productItem){
+            $totalQuantity += $productItem->getQuantity();
+        }
+
+        return $totalQuantity;
+    }
+
+    public function isProductOver(): bool
+    {
+        return $this->getTotalQuantity() === 0;
     }
 }

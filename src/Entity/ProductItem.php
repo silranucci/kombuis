@@ -21,9 +21,6 @@ class ProductItem
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $useByDates = null;
 
-    //#[ORM\Column(type: Types::BOOLEAN, nullable: false)]
-    //private ?bool $isStillGood = null;
-
     #[ORM\Column]
     private ?int $quantity = null;
 
@@ -113,8 +110,7 @@ class ProductItem
 
     public function isItemStillGood(): bool
     {
-        $todayDate = new \DateTime();
-        if($this->openingDate->diff(new \DateTime()) <  $todayDate->add($this->getProduct()->getDaysIsGoodAfterOpening()))
+        if($this->openingDate->diff(new \DateTime()) <  $this->getCurrentDate()->add($this->getProduct()->getDaysIsGoodAfterOpening()))
         {
             return true;
         };
@@ -122,4 +118,23 @@ class ProductItem
         return false;
     }
 
+    public function isItemExpired(): bool
+    {
+        if($this->getUseByDates() < $this->getCurrentDate())
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function getCurrentDate(): \DateTime
+    {
+        return new \DateTime();
+    }
+
+    public function isItemOver(): bool
+    {
+        return $this->getQuantity() === 0;
+    }
 }
