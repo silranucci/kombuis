@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ProductItem
 {
     #[ORM\Id]
-    // #[ORM\GeneratedValue] SE INSERITO "Single id is not allowed on composite primary key in entity"
+    // #[ORM\GeneratedValue] "Single id is not allowed on composite primary key in entity"
     #[ORM\Column]
     private ?int $id = null;
 
@@ -19,7 +19,7 @@ class ProductItem
     private ?\DateTimeInterface $openingDate = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $useByDates = null;
+    private ?\DateTimeInterface $useByDate = null;
 
     #[ORM\Column]
     private ?int $quantity = null;
@@ -34,11 +34,11 @@ class ProductItem
     private ?Shelf $shelf = null;
 
 
-    public function __construct(\DateTime $useByDates, int $quantity, Product $product, Shelf $shelf)
+    public function __construct(Product $product, \DateTime $useByDate, int $quantity, Shelf $shelf)
     {
-        $this->useByDates = $useByDates;
-        $this->quantity = $quantity;
         $this->product = $product;
+        $this->useByDate = $useByDate;
+        $this->quantity = $quantity;
         $this->shelf = $shelf;
     }
 
@@ -60,14 +60,14 @@ class ProductItem
         return $this;
     }
 
-    public function getUseByDates(): ?\DateTimeInterface
+    public function getUseByDate(): ?\DateTimeInterface
     {
-        return $this->useByDates;
+        return $this->useByDate;
     }
 
-    public function setUseByDates(?\DateTimeInterface $useByDates): self
+    public function setUseByDate(?\DateTimeInterface $useByDate): self
     {
-        $this->useByDates = $useByDates;
+        $this->useByDate = $useByDate;
 
         return $this;
     }
@@ -108,19 +108,21 @@ class ProductItem
         return $this;
     }
 
-    public function isItemStillGood(): bool
+    public function isProductItemStillGoodAfterBeingOpened(): bool
     {
-        if($this->openingDate->diff(new \DateTime()) <  $this->getCurrentDate()->add($this->getProduct()->getDaysIsGoodAfterOpening()))
+        $dateUntilTheProductItemIsStillGood = $this->getCurrentDate()->add($this->getProduct()->getDaysIsGoodAfterOpening());
+        if($dateUntilTheProductItemIsStillGood >= $this->getCurrentDate())
         {
+            //the product item is still good
             return true;
         };
 
         return false;
     }
 
-    public function isItemExpired(): bool
+    public function isProductItemExpired(): bool
     {
-        if($this->getUseByDates() < $this->getCurrentDate())
+        if($this->getUseByDate() <= $this->getCurrentDate())
         {
             return true;
         }
@@ -128,13 +130,14 @@ class ProductItem
         return false;
     }
 
+    public function isItemOver(): bool
+    {
+        return $this->getQuantity() === 0;
+    }
+
     private function getCurrentDate(): \DateTime
     {
         return new \DateTime();
     }
 
-    public function isItemOver(): bool
-    {
-        return $this->getQuantity() === 0;
-    }
 }

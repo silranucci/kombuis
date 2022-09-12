@@ -30,9 +30,12 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductItem::class)]
     private Collection $productItems;
 
-    public function __construct()
+    public function __construct(int $barcode, string $name, string $brand)
     {
         $this->productItems = new ArrayCollection();
+        $this->barcode = $barcode;
+        $this->name = $name;
+        $this->brand = $brand;
     }
 
     public function getId(): ?int

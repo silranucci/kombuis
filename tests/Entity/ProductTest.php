@@ -3,6 +3,7 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Product;
+use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\TestCase;
 
 class ProductTest extends TestCase
@@ -14,11 +15,13 @@ class ProductTest extends TestCase
         $this->assertGreaterThanOrEqual(0, $product->getTotalQuantity());
     }
 
-    public function testIsProductOver()
+    /*
+    public function testIsProductOver(EntityManager)
     {
         $product = new Product();
 
         $this->assertTrue($product->isProductOver());
     }
+    */
 
 }
