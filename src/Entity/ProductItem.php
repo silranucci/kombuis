@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 class ProductItem
 {
     #[ORM\Id]
-    // #[ORM\GeneratedValue] "Single id is not allowed on composite primary key in entity"
     #[ORM\Column]
     private ?int $id = null;
 
@@ -34,7 +33,7 @@ class ProductItem
     private ?Shelf $shelf = null;
 
 
-    public function __construct(Product $product, \DateTime $useByDate, int $quantity, Shelf $shelf)
+    public function __construct(Product $product, ?\DateTime $useByDate, ?int $quantity, ?Shelf $shelf)
     {
         $this->product = $product;
         $this->useByDate = $useByDate;

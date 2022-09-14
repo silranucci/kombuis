@@ -11,48 +11,40 @@ use Doctrine\ORM\Mapping as ORM;
 class Product
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\Column]
-    private ?int $barcode = null;
 
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $brand = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateInterval $daysIsGoodAfterOpening = null;
 
+    #[ORM\Column]
+    private ?int $totalQuantity = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $unitOfMeasure = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $safetyStock = null;
+
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductItem::class)]
     private Collection $productItems;
 
-    public function __construct(int $barcode, string $name, string $brand)
+
+    public function __construct(string $name)
     {
         $this->productItems = new ArrayCollection();
-        $this->barcode = $barcode;
         $this->name = $name;
-        $this->brand = $brand;
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getBarcode(): ?int
-    {
-        return $this->barcode;
-    }
-
-    public function setBarcode(int $barcode): self
-    {
-        $this->barcode = $barcode;
-
-        return $this;
     }
 
     public function getName(): ?string
@@ -72,21 +64,20 @@ class Product
         return $this->brand;
     }
 
-    public function setBrand(string $brand): self
+    public function setBrand(?string $brand): void
     {
         $this->brand = $brand;
-
-        return $this;
     }
+
 
     public function getDaysIsGoodAfterOpening(): ?\DateInterval
     {
-        return $this->DaysIsGoodAfterOpening;
+        return $this->daysIsGoodAfterOpening;
     }
 
     public function setDaysIsGoodAfterOpening(?\DateInterval $DaysIsGoodAfterOpening): self
     {
-        $this->DaysIsGoodAfterOpening = $DaysIsGoodAfterOpening;
+       $this->daysIsGoodAfterOpening = $DaysIsGoodAfterOpening;
 
         return $this;
     }
@@ -123,18 +114,20 @@ class Product
 
     public function getTotalQuantity(): int
     {
-        $productItemsArray = $this->getProductItems()->toArray();
         $totalQuantity = 0;
 
-        foreach ($productItemsArray as $productItem){
+        foreach ($this->productItems as $productItem){
             $totalQuantity += $productItem->getQuantity();
         }
 
         return $totalQuantity;
     }
 
-    public function isProductOver(): bool
+    public function setSafetyStock(?int $safetyStock): void
     {
-        return $this->getTotalQuantity() === 0;
+        $this->safetyStock = $safetyStock;
     }
+
+
+
 }
