@@ -17,21 +17,20 @@ class ProductItem
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $openingDate = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $useByDate = null;
-
-    #[ORM\Column]
-    private ?int $quantity = null;
-
     #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'productItems')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 
+    #[ORM\Column]
+    private ?int $quantity = null;
+
     #[ORM\ManyToOne(inversedBy: 'productItems')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Shelf $shelf = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $useByDate = null;
 
     public function __construct(Product $product, ?\DateTime $useByDate, ?int $quantity, ?Shelf $shelf)
     {
@@ -40,7 +39,6 @@ class ProductItem
         $this->quantity = $quantity;
         $this->shelf = $shelf;
     }
-
 
     public function getId(): ?int
     {
@@ -129,11 +127,7 @@ class ProductItem
         return false;
     }
 
-    public function isItemOver(): bool
-    {
-        return $this->getQuantity() === 0;
-    }
-
+    // TODO -
     private function getCurrentDate(): \DateTime
     {
         return new \DateTime();

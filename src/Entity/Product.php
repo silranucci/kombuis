@@ -14,27 +14,26 @@ class Product
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $name = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $brand = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateInterval $daysIsGoodAfterOpening = null;
 
-    #[ORM\Column]
-    private ?int $totalQuantity = null;
-
     #[ORM\Column(length: 50)]
-    private ?string $unitOfMeasure = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $safetyStock = null;
+    private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductItem::class)]
     private Collection $productItems;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $safetyStock = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $unitOfMeasure = null;
+
+    #[ORM\Column]
+    private ?int $totalQuantity = null;
 
     public function __construct(string $name)
     {
@@ -47,18 +46,6 @@ class Product
         return $this->id;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     public function getBrand(): ?string
     {
         return $this->brand;
@@ -69,7 +56,6 @@ class Product
         $this->brand = $brand;
     }
 
-
     public function getDaysIsGoodAfterOpening(): ?\DateInterval
     {
         return $this->daysIsGoodAfterOpening;
@@ -77,7 +63,19 @@ class Product
 
     public function setDaysIsGoodAfterOpening(?\DateInterval $DaysIsGoodAfterOpening): self
     {
-       $this->daysIsGoodAfterOpening = $DaysIsGoodAfterOpening;
+        $this->daysIsGoodAfterOpening = $DaysIsGoodAfterOpening;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }
@@ -112,21 +110,39 @@ class Product
         return $this;
     }
 
+    public function setSafetyStock(?int $safetyStock): void
+    {
+        $this->safetyStock = $safetyStock;
+    }
+
+    public function isProductQuantityUnderSafetyStockLevel(): bool
+    {
+        return $this->getTotalQuantity() < $this->safetyStock;
+    }
+
     public function getTotalQuantity(): int
     {
         $totalQuantity = 0;
 
-        foreach ($this->productItems as $productItem){
+        foreach ($this->getProductItems() as $productItem){
             $totalQuantity += $productItem->getQuantity();
         }
 
         return $totalQuantity;
     }
 
-    public function setSafetyStock(?int $safetyStock): void
+    public function getUnitOfMeasure(): string
     {
-        $this->safetyStock = $safetyStock;
+        return $this->unitOfMeasure;
     }
+
+    public function setUnitOfMeasure(string $unitOfMeasure): void
+    {
+        $this->unitOfMeasure = $unitOfMeasure;
+    }
+
+
+
 
 
 

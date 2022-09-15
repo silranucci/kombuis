@@ -35,7 +35,38 @@ class ProductTest extends TestCase
 
     public function testProductIsUnderSafetyStock()
     {
-        $this->markTestIncomplete('needs setSafetyStock');
+        $productItem1 = $this->createStub(ProductItem::class);
+        $productItem1->expects($this->once())
+            ->method('getQuantity')
+            ->willReturn(100);
+
+        $this->product->setSafetyStock(150);
+
+        $this->product->addProductItem($productItem1);
+
+        $this->assertTrue($this->product->isProductQuantityUnderSafetyStockLevel());
+    }
+
+    /**
+     * @dataProvider settingUnitOfMeasureProvider
+     * @requires UoM enum
+     */
+    public function testSettingUnitOfMeasure()
+    {
+        $this->product->setUnitOfMeasure('gr');
+
+    }
+
+    public function settingUnitOfMeasureProvider()
+    {
+        return [
+            []
+        ];
+    }
+
+    public function testGettingQuantityInformation()
+    {
+        $this->markTestIncomplete();
     }
 
 }
