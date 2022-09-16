@@ -85,8 +85,10 @@
         }
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "phpunit/php-code-coverage": "^9.2",
         "phpunit/phpunit": "^9",
-        "symfony/maker-bundle": "^1.45"
+        "symfony/maker-bundle": "^1.45",
+        "zenstruck/foundry": "^1.21"
     }
 }
