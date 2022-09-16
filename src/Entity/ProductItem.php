@@ -20,25 +20,18 @@ class ProductItem
     #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'productItems')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Product $product = null;
+    private ?Product $product;
 
     #[ORM\Column]
-    private ?int $quantity = null;
+    private ?int $quantity = 0;
 
     #[ORM\ManyToOne(inversedBy: 'productItems')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Shelf $shelf = null;
+    private ?Shelf $shelf;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $useByDate = null;
 
-    public function __construct(Product $product, ?\DateTime $useByDate, ?int $quantity, ?Shelf $shelf)
-    {
-        $this->product = $product;
-        $this->useByDate = $useByDate;
-        $this->quantity = $quantity;
-        $this->shelf = $shelf;
-    }
 
     public function getId(): ?int
     {
@@ -107,7 +100,7 @@ class ProductItem
 
     public function isProductItemStillGoodAfterBeingOpened(): bool
     {
-        $dateUntilTheProductItemIsStillGood = $this->getCurrentDate()->add($this->getProduct()->getDaysIsGoodAfterOpening());
+        $dateUntilTheProductItemIsStillGood = $this->getOpeningDate()->add($this->getProduct()->getDaysIsGoodAfterOpening());
         if($dateUntilTheProductItemIsStillGood >= $this->getCurrentDate())
         {
             //the product item is still good

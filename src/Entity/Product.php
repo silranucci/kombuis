@@ -36,10 +36,9 @@ class Product
     #[ORM\Column]
     private ?int $totalQuantity = null;
 
-    public function __construct(string $name)
+    public function __construct()
     {
         $this->productItems = new ArrayCollection();
-        $this->name = $name;
     }
 
     public function getId(): ?int

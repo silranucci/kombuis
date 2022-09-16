@@ -13,7 +13,7 @@ class ProductTest extends TestCase
 
     public function setUp(): void
     {
-        $this->product = new Product ('Prova');
+        $this->product = new Product();
     }
 
     public function testGettingProductTotalQuantity()

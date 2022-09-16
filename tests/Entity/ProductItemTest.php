@@ -13,11 +13,7 @@ class ProductItemTest extends TestCase
 
     public function setUp(): void
     {
-        $product = $this->createMock(Product::class);
-        $shelf = $this->createMock(Shelf::class);
-        $dt = $this->getDateTimeObject();
-
-        $this->productItem = new ProductItem($product, $dt, 0, $shelf);
+        $this->productItem = new ProductItem();
     }
 
 
@@ -31,6 +27,8 @@ class ProductItemTest extends TestCase
             ->willReturn($daysIsGoodAfterOpening);
 
         $this->productItem->setProduct($product);
+
+        $this->productItem->setOpeningDate($openingDate);
 
         $this->assertTrue($this->productItem->isProductItemStillGoodAfterBeingOpened());
     }
@@ -72,7 +70,7 @@ class ProductItemTest extends TestCase
     }
 
 
-    public function productItemIsNotExpiredProvider()
+    public function productItemIsNotExpiredProvider(): array
     {
         $dt = $this->getDateTimeObject();
 
