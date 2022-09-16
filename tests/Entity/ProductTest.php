@@ -4,6 +4,7 @@ namespace App\Tests\Entity;
 
 use App\Entity\Product;
 use App\Entity\ProductItem;
+use App\Enumerations\UnitOfMeasure;
 use PHPUnit\Framework\TestCase;
 
 class ProductTest extends TestCase
@@ -51,22 +52,22 @@ class ProductTest extends TestCase
      * @dataProvider settingUnitOfMeasureProvider
      * @requires UoM enum
      */
-    public function testSettingUnitOfMeasure()
+    public function testSettingUnitOfMeasure(string $input)
     {
-        $this->product->setUnitOfMeasure('gr');
+        $this->product->setUnitOfMeasure(UnitOfMeasure::from($input));
 
+        $this->assertSame($input, $this->product->getUnitOfMeasure());
     }
 
     public function settingUnitOfMeasureProvider()
     {
         return [
-            []
+            ["g"],
+            ["l"],
+            ["kg"],
+            ["u"],
+            ["ml"],
         ];
-    }
-
-    public function testGettingQuantityInformation()
-    {
-        $this->markTestIncomplete();
     }
 
 }

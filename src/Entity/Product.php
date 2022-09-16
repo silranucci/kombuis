@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enumerations\UnitOfMeasure;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -136,9 +137,9 @@ class Product
         return $this->unitOfMeasure;
     }
 
-    public function setUnitOfMeasure(string $unitOfMeasure): void
+    public function setUnitOfMeasure(UnitOfMeasure $unitOfMeasure): void
     {
-        $this->unitOfMeasure = $unitOfMeasure;
+        $this->unitOfMeasure = $unitOfMeasure->value;
     }
 
 
