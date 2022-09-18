@@ -15,7 +15,6 @@ class Shelf
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'shelves')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Furniture $furniture = null;
