@@ -16,14 +16,14 @@ class Room
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $Name = null;
+    private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'room', targetEntity: Cabinet::class)]
-    private Collection $cabinets;
+    #[ORM\OneToMany(mappedBy: 'room', targetEntity: Furniture::class)]
+    private Collection $furnitures;
 
     public function __construct()
     {
-        $this->cabinets = new ArrayCollection();
+        $this->furnitures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -33,40 +33,40 @@ class Room
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Cabinet>
+     * @return Collection<int, Furniture>
      */
-    public function getCabinets(): Collection
+    public function getFurnitures(): Collection
     {
-        return $this->cabinets;
+        return $this->furnitures;
     }
 
-    public function addCabinet(Cabinet $cabinet): self
+    public function addFurniture(Furniture $furniture): self
     {
-        if (!$this->cabinets->contains($cabinet)) {
-            $this->cabinets->add($cabinet);
-            $cabinet->setRoom($this);
+        if (!$this->furnitures->contains($furniture)) {
+            $this->furnitures->add($furniture);
+            $furniture->setRoom($this);
         }
 
         return $this;
     }
 
-    public function removeCabinet(Cabinet $cabinet): self
+    public function removeFurniture(Furniture $furniture): self
     {
-        if ($this->cabinets->removeElement($cabinet)) {
+        if ($this->furnitures->removeElement($furniture)) {
             // set the owning side to null (unless already changed)
-            if ($cabinet->getRoom() === $this) {
-                $cabinet->setRoom(null);
+            if ($furniture->getRoom() === $this) {
+                $furniture->setRoom(null);
             }
         }
 

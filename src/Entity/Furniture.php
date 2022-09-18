@@ -2,17 +2,21 @@
 
 namespace App\Entity;
 
-use App\Repository\CabinetRepository;
+use App\Repository\FurnitureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CabinetRepository::class)]
-class Cabinet
+#[ORM\Entity(repositoryClass: FurnitureRepository::class)]
+class Furniture
 {
     #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;    
+    
     #[ORM\Column(length: 255)]
-    private ?string $Name = null;
+    private ?string $name = null;
 
     #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'cabinets')]
@@ -27,26 +31,19 @@ class Cabinet
         $this->shelves = new ArrayCollection();
     }
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
-
-        return $this;
-    }
-
-    public function getRoom(): ?Room
-    {
-        return $this->room;
-    }
-
-    public function setRoom(?Room $room): self
-    {
-        $this->room = $room;
+        $this->name = $name;
 
         return $this;
     }
@@ -63,7 +60,7 @@ class Cabinet
     {
         if (!$this->shelves->contains($shelf)) {
             $this->shelves->add($shelf);
-            $shelf->setCabinet($this);
+            $shelf->setFurniture($this);
         }
 
         return $this;
@@ -73,11 +70,24 @@ class Cabinet
     {
         if ($this->shelves->removeElement($shelf)) {
             // set the owning side to null (unless already changed)
-            if ($shelf->getCabinet() === $this) {
-                $shelf->setCabinet(null);
+            if ($shelf->getFurniture() === $this) {
+                $shelf->setFurniture(null);
             }
         }
 
         return $this;
     }
+
+    public function getRoom(): ?Room
+    {
+        return $this->room;
+    }
+
+    public function setRoom(?Room $room): self
+    {
+        $this->room = $room;
+
+        return $this;
+    }
+
 }

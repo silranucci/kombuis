@@ -11,14 +11,17 @@ use Doctrine\ORM\Mapping as ORM;
 class Shelf
 {
     #[ORM\Id]
-    // #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'shelves')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Cabinet $cabinet = null;
+    private ?Furniture $furniture = null;
+
+    #[ORM\Column]
+    private ?int $shelfNumber = null;
 
     #[ORM\OneToMany(mappedBy: 'shelf', targetEntity: ProductItem::class)]
     private Collection $productItems;
@@ -33,16 +36,26 @@ class Shelf
         return $this->id;
     }
 
-    public function getCabinet(): ?Cabinet
+    public function getFurniture(): ?Furniture
     {
-        return $this->cabinet;
+        return $this->furniture;
     }
 
-    public function setCabinet(?Cabinet $cabinet): self
+    public function setFurniture(?Furniture $furniture): self
     {
-        $this->cabinet = $cabinet;
+        $this->furniture = $furniture;
 
         return $this;
+    }
+
+    public function getShelfNumber(): ?int
+    {
+        return $this->shelfNumber;
+    }
+
+    public function setShelfNumber(?int $shelfNumber): void
+    {
+        $this->shelfNumber = $shelfNumber;
     }
 
     /**

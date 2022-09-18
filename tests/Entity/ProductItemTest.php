@@ -4,7 +4,6 @@ namespace App\Tests\Entity;
 
 use App\Entity\Product;
 use App\Entity\ProductItem;
-use App\Entity\Shelf;
 use PHPUnit\Framework\TestCase;
 
 class ProductItemTest extends TestCase

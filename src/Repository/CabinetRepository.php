@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Cabinet;
+use App\Entity\Furniture;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Cabinet>
+ * @extends ServiceEntityRepository<Furniture>
  *
- * @method Cabinet|null find($id, $lockMode = null, $lockVersion = null)
- * @method Cabinet|null findOneBy(array $criteria, array $orderBy = null)
- * @method Cabinet[]    findAll()
- * @method Cabinet[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Furniture|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Furniture|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Furniture[]    findAll()
+ * @method Furniture[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class CabinetRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Cabinet::class);
+        parent::__construct($registry, Furniture::class);
     }
 
-    public function add(Cabinet $entity, bool $flush = false): void
+    public function add(Furniture $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class CabinetRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Cabinet $entity, bool $flush = false): void
+    public function remove(Furniture $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class CabinetRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Cabinet[] Returns an array of Cabinet objects
+//     * @return Furniture[] Returns an array of Furniture objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class CabinetRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Cabinet
+//    public function findOneBySomeField($value): ?Furniture
 //    {
 //        return $this->createQueryBuilder('c')
 //            ->andWhere('c.exampleField = :val')

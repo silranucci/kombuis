@@ -17,7 +17,6 @@ class ProductItem
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $openingDate = null;
 
-    #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'productItems')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product;
@@ -31,7 +30,6 @@ class ProductItem
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $useByDate = null;
-
 
     public function getId(): ?int
     {
