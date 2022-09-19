@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Product
 {
     #[ORM\Id]
+    #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
@@ -32,9 +33,6 @@ class Product
 
     #[ORM\Column(length: 50)]
     private ?string $unitOfMeasure = null;
-
-    #[ORM\Column]
-    private ?int $totalQuantity = null;
 
     public function __construct()
     {

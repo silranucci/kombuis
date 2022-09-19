@@ -15,7 +15,7 @@ class Furniture
     #[ORM\Column]
     private ?int $id = null;    
     
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 100, nullable: false)]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'cabinets')]

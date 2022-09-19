@@ -19,7 +19,7 @@ class Shelf
     #[ORM\JoinColumn(nullable: false)]
     private ?Furniture $furniture = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: false)]
     private ?int $shelfNumber = null;
 
     #[ORM\OneToMany(mappedBy: 'shelf', targetEntity: ProductItem::class)]

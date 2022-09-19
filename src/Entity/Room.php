@@ -15,7 +15,7 @@ class Room
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: false)]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'room', targetEntity: Furniture::class)]
