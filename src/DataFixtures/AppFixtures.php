@@ -9,6 +9,7 @@ use App\Entity\Room;
 use App\Entity\Shelf;
 use App\Enumerations\UnitOfMeasure;
 use App\Factory\ProductFactory;
+use App\Factory\ProductItemFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -16,6 +17,15 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+        $products = ProductFactory::createMany(50);
+
+        ProductItemFactory::createMany(150, function() use ($products){
+            return [
+                'product' => $products[array_rand($products)],
+            ];
+        });
+
+        /*
         $product = new Product();
         $product->setName('Cioccutella');
         $product->setUnitOfMeasure(UnitOfMeasure::GRAM);
@@ -42,5 +52,6 @@ class AppFixtures extends Fixture
         $manager->persist($room);
 
         $manager->flush();
+        */
     }
 }

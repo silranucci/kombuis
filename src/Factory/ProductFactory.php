@@ -3,6 +3,7 @@
 namespace App\Factory;
 
 use App\Entity\Product;
+use App\Enumerations\UnitOfMeasure;
 use App\Repository\ProductRepository;
 use Zenstruck\Foundry\RepositoryProxy;
 use Zenstruck\Foundry\ModelFactory;
@@ -35,13 +36,16 @@ final class ProductFactory extends ModelFactory
         // TODO inject services if required (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services)
     }
 
+
     protected function getDefaults(): array
     {
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'name' => self::faker()->text(),
-            'unitOfMeasure' => self::faker()->text(),
-            'totalQuantity' => self::faker()->randomNumber(),
+            'brand' => self::faker()->word(),
+            'daysIsGoodAfterOpening' => self::faker()->boolean(30) ? new \DateInterval('P10D') : null,
+            'name' => self::faker()->word(),
+            'safetyStock' => self::faker()->numberBetween(0, 3),
+            'unitOfMeasure' => UnitOfMeasure::GRAM,
         ];
     }
 

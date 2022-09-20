@@ -39,7 +39,11 @@ final class ProductItemFactory extends ModelFactory
     {
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
+            'openingDate' => self::faker()->dateTimeBetween('-1 month'),
+            'product' => ProductFactory::new()->create(),
             'quantity' => self::faker()->randomNumber(),
+            'shelf' => null,
+            'useByDate'=> self::faker()->dateTimeBetween('-1 month', '2 years')
         ];
     }
 

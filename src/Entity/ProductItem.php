@@ -26,7 +26,7 @@ class ProductItem
     private ?int $quantity = 0;
 
     #[ORM\ManyToOne(inversedBy: 'productItems')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Shelf $shelf;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
