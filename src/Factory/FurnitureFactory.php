@@ -26,7 +26,7 @@ use Zenstruck\Foundry\Proxy;
  * @method static CabinetRepository|RepositoryProxy repository()
  * @method Furniture|Proxy create(array|callable $attributes = [])
  */
-final class CabinetFactory extends ModelFactory
+final class FurnitureFactory extends ModelFactory
 {
     public function __construct()
     {
@@ -39,6 +39,7 @@ final class CabinetFactory extends ModelFactory
     {
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
+            'name' => self::faker()->word(),
         ];
     }
 

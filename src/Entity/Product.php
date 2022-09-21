@@ -139,9 +139,4 @@ class Product
         $this->unitOfMeasure = $unitOfMeasure->value;
     }
 
-
-
-
-
-
 }

@@ -39,6 +39,7 @@ final class ShelfFactory extends ModelFactory
     {
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
+            'shelfNumber' => self::faker()->numberBetween(0 , 10),
         ];
     }
 

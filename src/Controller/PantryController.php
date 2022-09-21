@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
-use http\Env\Response;
+use App\Entity\Product;
+use App\Entity\ProductItem;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use \Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -10,8 +14,22 @@ class PantryController extends AbstractController
 {
 
     #[Route('/')]
-    public function pantry()
+    public function show(EntityManagerInterface $entityManager)
     {
-        return $this->render('pantry/pantryGrid.html.twig');
+        $repository = $entityManager->getRepository(Product::class);
+        $products = $repository->findAll();
+
+        return $this->render('pantry/pantryGrid.html.twig',
+            ['products' => $products]
+        );
+    }
+
+
+    #[Route('/{id}', name: 'app_productItem')]
+    public function showProductItem(Product $product): Response
+    {
+        return $this->render('pantry/productItemInfo.html.twig',
+            ['product' => $product],
+        );
     }
 }

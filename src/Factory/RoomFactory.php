@@ -39,7 +39,7 @@ final class RoomFactory extends ModelFactory
     {
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'Name' => self::faker()->text(),
+            'name' => self::faker()->word(),
         ];
     }
 

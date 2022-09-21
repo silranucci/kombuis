@@ -124,5 +124,4 @@ class ProductItem
     {
         return new \DateTime();
     }
-
 }

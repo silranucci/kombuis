@@ -8,8 +8,11 @@ use App\Entity\ProductItem;
 use App\Entity\Room;
 use App\Entity\Shelf;
 use App\Enumerations\UnitOfMeasure;
+use App\Factory\FurnitureFactory;
 use App\Factory\ProductFactory;
 use App\Factory\ProductItemFactory;
+use App\Factory\RoomFactory;
+use App\Factory\ShelfFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -17,41 +20,28 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $products = ProductFactory::createMany(50);
+        $rooms = RoomFactory::createMany(5);
 
-        ProductItemFactory::createMany(150, function() use ($products){
+        $furnitures = FurnitureFactory::createMany(3, function() use ($rooms){
             return [
-                'product' => $products[array_rand($products)],
+                'room' => $rooms[array_rand($rooms)],
             ];
         });
 
-        /*
-        $product = new Product();
-        $product->setName('Cioccutella');
-        $product->setUnitOfMeasure(UnitOfMeasure::GRAM);
+        $shelves = ShelfFactory::createMany(10, function() use ($furnitures){
+            return [
+                'furniture' => $furnitures[array_rand($furnitures)],
+            ];
+        });
 
-        $productItem = new ProductItem();
-        $product->addProductItem($productItem);
 
-        $shelf = new Shelf();
-        $shelf->addProductItem($productItem);
-        $shelf->setShelfNumber(12);
+        $products = ProductFactory::createMany(50);
 
-        $furniture = new Furniture();
-        $furniture->setName('mobileCucina');
-        $furniture->addShelf($shelf);
-
-        $room = new Room();
-        $room->setName('cucina');
-        $room->addFurniture($furniture);
-
-        $manager->persist($product);
-        $manager->persist($productItem);
-        $manager->persist($shelf);
-        $manager->persist($furniture);
-        $manager->persist($room);
-
-        $manager->flush();
-        */
+        ProductItemFactory::createMany(150, function() use ($products, $shelves){
+            return [
+                'product' => $products[array_rand($products)],
+                'shelf' => $shelves[array_rand($shelves)],
+            ];
+        });
     }
 }
