@@ -2,12 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Furniture;
-use App\Entity\Product;
-use App\Entity\ProductItem;
-use App\Entity\Room;
-use App\Entity\Shelf;
-use App\Enumerations\UnitOfMeasure;
 use App\Factory\FurnitureFactory;
 use App\Factory\ProductFactory;
 use App\Factory\ProductItemFactory;
@@ -43,6 +37,5 @@ class AppFixtures extends Fixture
                 'shelf' => $shelves[array_rand($shelves)],
             ];
         });
-
     }
 }

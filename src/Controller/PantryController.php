@@ -12,18 +12,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PantryController extends AbstractController
 {
-
     #[Route('/')]
     public function show(EntityManagerInterface $entityManager)
     {
         $repository = $entityManager->getRepository(Product::class);
-        $products = $repository->findAll();
+        $products = $repository->findBy([], ['name' => 'ASC']);
 
         return $this->render('pantry/pantryGrid.html.twig',
             ['products' => $products]
         );
     }
-
 
     #[Route('/{id}', name: 'app_productItem')]
     public function showProductItem(Product $product): Response
