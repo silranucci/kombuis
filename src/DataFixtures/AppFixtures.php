@@ -43,5 +43,6 @@ class AppFixtures extends Fixture
                 'shelf' => $shelves[array_rand($shelves)],
             ];
         });
+
     }
 }
