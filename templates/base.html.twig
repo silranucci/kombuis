@@ -16,9 +16,9 @@
     </head>
     <body>
         {% block navbar %}
-            <nav class="navbar bg-light fixed-top">
+            <nav class="navbar bg-light fixed-top mb-5">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Kombuis</a>
+                    <a class="navbar-brand" href="{{ path('app_homepage') }}">Kombuis</a>
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
@@ -43,7 +43,7 @@
                                     <a class="nav-link" href="#">Menu' settimanale</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Dispensa</a>
+                                    <a class="nav-link" href="{{ path('app_pantry_homepage') }}">Dispensa</a>
                                 </li>
                             </ul>
                         </div>
