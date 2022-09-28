@@ -1,24 +1,25 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Brand</th>
-            <th scope="col">Total Quantity</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for product in products %}
-        <tr>
-            <th scope="row"><a href="{{ path('app_productItem', {id: product.id}) }}">{{ product.id }}</a></th>
-            <td>{{ product.name }}</td>
-            <td>{{ product.brand }}</td>
-            <td>{{ product.totalQuantity }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Total Quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+            <tr>
+                <th scope="row"><a href="{{ path('app_productItem', {id: product.id}) }}">{{ product.id }}</a></th>
+                <td>{{ product.name }}</td>
+                <td>{{ product.brand }}</td>
+                <td>{{ product.totalQuantity }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}
