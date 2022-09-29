@@ -3,9 +3,9 @@
 {% block body %}
     <h1>Add new product</h1>
 
-    {{  form_start((productForm)) }}
-        {{  form_widget(productForm) }}
+    {{  form_start((addProductForm)) }}
+        {{  form_widget(addProductForm) }}
 
         <button type="submit" class="btn btn-primary">Create!</button>
-    {{  form_end((productForm)) }}
+    {{  form_end((addProductForm)) }}
 {% endblock %}

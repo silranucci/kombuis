@@ -6,6 +6,7 @@ use App\Repository\ProductItemRepository;
 use Cassandra\Date;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductItemRepository::class)]
 class ProductItem
@@ -18,6 +19,8 @@ class ProductItem
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $openingDate = null;
 
+    #[Assert\Type(type: Product::class)]
+    #[Assert\Valid]
     #[ORM\ManyToOne(inversedBy: 'productItems')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product;

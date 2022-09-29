@@ -25,7 +25,7 @@ class Product
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductItem::class)]
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductItem::class, cascade: ['persist'])]
     private Collection $productItems;
 
     #[ORM\Column(nullable: true)]
@@ -106,6 +106,11 @@ class Product
         }
 
         return $this;
+    }
+
+    public function getSafetyStock(): ?int
+    {
+        return $this->safetyStock;
     }
 
     public function setSafetyStock(?int $safetyStock): void

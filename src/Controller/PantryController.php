@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Entity\ProductItem;
-use App\Form\ProductFormType;
+use App\Form\AddProductFormType;
+use App\Form\ProductItemType;
+use App\Form\ProductType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
@@ -24,34 +26,71 @@ class PantryController extends AbstractController
         );
     }
 
+    // TODO - https://blog.martinhujer.cz/symfony-forms-with-request-objects/
     #[Route('/pantry/new', name: 'app_pantry_new_product')]
     public function newProduct(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(ProductFormType::class);
+        $form = $this->createForm(AddProductFormType::class);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $data = $form->getData();
-            $productItem = new ProductItem();
-            $productItem->setOpeningDate($data['openingDate'])
-                ->setQuantity($data['quantity'])
-                ->setUseByDate($data['useByDate']);
 
-            $product = new Product();
-            $product->setName($data['name'])
-                ->setBrand($data['brand']);
-            $product->setDaysIsGoodAfterOpening($data['daysIsGoodAfterOpening']);
-            $product->setSafetyStock($data['safetyStock']);
-            $product->setUnitOfMeasure($data['unitOfMeasure']);
-            $product->addProductItem($productItem);
+            /** @var $product Product */
+            $product = clone $data['product'];
+            $product->addProductItem($data['productItem']);
 
             $entityManager->persist($product);
             $entityManager->flush();
+
+            return $this->redirectToRoute('app_pantry_homepage');
         }
 
         return $this->render('pantry/product_new.html.twig', [
+            'addProductForm' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/pantry/edit-product/{id}', name: 'app_edit_product')]
+    public function editProduct(Product $product, Request $request, EntityManagerInterface $entityManager)
+    {
+        $form = $this->createForm(ProductType::class, $product);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+
+            $entityManager->persist($product);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_pantry_homepage');
+        }
+
+        return $this->render('pantry/product_edit.html.twig', [
+            'product' => $product,
             'productForm' => $form->createView(),
         ]);
+
+    }
+
+    #[Route('/pantry/{id}/edit', name: 'app_edit_product_item')]
+    public function editProductItem(ProductItem $productItem, Request $request, EntityManagerInterface $entityManager)
+    {
+        $form = $this->createForm(ProductItemType::class, $productItem);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+
+            $entityManager->persist($productItem);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_pantry_homepage');
+            //return $this->redirectToRoute('app_productItem', ['id' => $productItem->getId()]);
+        }
+
+        return $this->render('pantry/product_item_edit.html.twig', [
+            'productItem' => $productItem,
+            'productItemForm' => $form->createView(),
+        ]);;
     }
 
     #[Route('/pantry/{id}', name: 'app_productItem')]
