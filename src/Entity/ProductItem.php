@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ProductItemRepository;
-use Cassandra\Date;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -102,13 +101,15 @@ class ProductItem
 
     public function isProductItemStillGoodAfterBeingOpened(): bool
     {
-        $dateUntilTheProductItemIsStillGood = $this->getOpeningDate()->add($this->getProduct()->getDaysIsGoodAfterOpening());
+        $dateUntilTheProductItemIsStillGood = $this->getOpeningDate()
+            ->add(
+                $this->getProduct()->getDaysIsGoodAfterOpening()
+            );
         if($dateUntilTheProductItemIsStillGood >= $this->getCurrentDate())
         {
             //the product item is still good
             return true;
         };
-
         return false;
     }
 
@@ -118,11 +119,9 @@ class ProductItem
         {
             return true;
         }
-
         return false;
     }
 
-    // TODO -
     private function getCurrentDate(): \DateTime
     {
         return new \DateTime();

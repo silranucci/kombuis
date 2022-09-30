@@ -26,6 +26,7 @@ class Product
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductItem::class, cascade: ['persist'])]
+    #[ORM\OrderBy(['useByDate' => 'ASC'])]
     private Collection $productItems;
 
     #[ORM\Column(nullable: true)]

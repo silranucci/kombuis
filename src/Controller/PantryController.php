@@ -21,7 +21,7 @@ class PantryController extends AbstractController
         $repository = $entityManager->getRepository(Product::class);
         $products = $repository->findBy([], ['name' => 'ASC']);
 
-        return $this->render('pantry/pantryGrid.html.twig',
+        return $this->render('/pantry/product_list.html.twig',
             ['products' => $products]
         );
     }
@@ -36,8 +36,8 @@ class PantryController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $data = $form->getData();
 
-            /** @var $product Product */
-            $product = clone $data['product'];
+            /** @var Product $product */
+            $product = $data['product'];
             $product->addProductItem($data['productItem']);
 
             $entityManager->persist($product);
@@ -62,7 +62,9 @@ class PantryController extends AbstractController
             $entityManager->persist($product);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_pantry_homepage');
+            return $this->redirectToRoute('app_edit_product_item', [
+                'id' => $product->getId(),
+            ]);
         }
 
         return $this->render('pantry/product_edit.html.twig', [
@@ -96,7 +98,7 @@ class PantryController extends AbstractController
     #[Route('/pantry/{id}', name: 'app_productItem')]
     public function showProductItem(Product $product): Response
     {
-        return $this->render('pantry/productItemInfo.html.twig',
+        return $this->render('product_item_info.html.twig',
             ['product' => $product],
         );
     }
