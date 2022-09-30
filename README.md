@@ -4,9 +4,9 @@
 
 It is the manager of your kitchen.
 
-It allows you to:
+It will allow you to:
 - keep track of the foods in your pantry (how much and where they are), 
-- manage the weekly menu
+- manage the weekly menu 
 - make a shopping list based on the missing ingredientsin your pantry necessary to cook a given recipe. 
 
 > **NOTE**: It is intended as a purely personal project and with self-teaching purposes (at least for now). 
