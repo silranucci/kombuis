@@ -32,6 +32,9 @@ class Product
     #[ORM\Column(nullable: true)]
     private ?int $safetyStock = null;
 
+    #[ORM\Column]
+    private ?int $totalQuantity = null;
+
     #[ORM\Column(length: 50)]
     private ?string $unitOfMeasure = null;
 
@@ -126,13 +129,11 @@ class Product
 
     public function getTotalQuantity(): int
     {
-        $totalQuantity = 0;
-
         foreach ($this->getProductItems() as $productItem){
-            $totalQuantity += $productItem->getQuantity();
+            $this->totalQuantity += $productItem->getQuantity();
         }
 
-        return $totalQuantity;
+        return $this->totalQuantity;
     }
 
     public function getUnitOfMeasure(): string

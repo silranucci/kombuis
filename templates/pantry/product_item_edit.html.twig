@@ -3,11 +3,9 @@
 {% block main %}
     <h1>Edit {{ productItem.product.name}}</h1>
 
-    {{  form_start((productItemForm)) }}
-        {{  form_widget(productItemForm) }}
-
-        <button type="submit" class="btn btn-primary">Update!</button>
-    {{  form_end((productItemForm)) }}
-
+    {{ include('pantry/_form.html.twig',
+        {'button' : 'Update'}
+    )
+    }}
 
 {% endblock %}

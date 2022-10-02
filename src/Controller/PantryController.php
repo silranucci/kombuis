@@ -47,7 +47,7 @@ class PantryController extends AbstractController
         }
 
         return $this->render('pantry/product_new.html.twig', [
-            'addProductForm' => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -69,7 +69,7 @@ class PantryController extends AbstractController
 
         return $this->render('pantry/product_edit.html.twig', [
             'product' => $product,
-            'productForm' => $form->createView(),
+            'form' => $form->createView(),
         ]);
 
     }
@@ -91,8 +91,8 @@ class PantryController extends AbstractController
 
         return $this->render('pantry/product_item_edit.html.twig', [
             'productItem' => $productItem,
-            'productItemForm' => $form->createView(),
-        ]);;
+            'form' => $form->createView(),
+        ]);
     }
 
     #[Route('/pantry/{id}', name: 'app_productItem')]

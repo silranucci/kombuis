@@ -3,9 +3,8 @@
 {% block main %}
     <h1>Add new product</h1>
 
-    {{  form_start((addProductForm)) }}
-    {{  form_widget(addProductForm) }}
-
-    <button type="submit" class="btn btn-primary">Create!</button>
-    {{  form_end((addProductForm)) }}
+    {{ include('pantry/_form.html.twig',
+        {'button' : 'Add Product'}
+    )
+    }}
 {% endblock %}
