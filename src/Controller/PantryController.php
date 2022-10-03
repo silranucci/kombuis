@@ -28,7 +28,7 @@ class PantryController extends AbstractController
 
     // TODO - https://blog.martinhujer.cz/symfony-forms-with-request-objects/
     #[Route('/pantry/new', name: 'app_pantry_new_product')]
-    public function newProduct(Request $request, EntityManagerInterface $entityManager): Response
+    public function addNewProduct(Request $request, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(AddProductFormType::class);
 
@@ -52,7 +52,7 @@ class PantryController extends AbstractController
     }
 
     #[Route('/pantry/edit-product/{id}', name: 'app_edit_product')]
-    public function editProduct(Product $product, Request $request, EntityManagerInterface $entityManager)
+    public function editProduct(Product $product, Request $request, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ProductType::class, $product);
 
@@ -62,8 +62,7 @@ class PantryController extends AbstractController
             $entityManager->persist($product);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_edit_product_item', [
-                'id' => $product->getId(),
+            return $this->redirectToRoute('app_pantry_homepage', [
             ]);
         }
 
@@ -74,7 +73,8 @@ class PantryController extends AbstractController
 
     }
 
-    #[Route('/pantry/{id}/edit', name: 'app_edit_product_item')]
+
+    #[Route('/pantry/edit-item/{id}', name: 'app_edit_product_item')]
     public function editProductItem(ProductItem $productItem, Request $request, EntityManagerInterface $entityManager)
     {
         $form = $this->createForm(ProductItemType::class, $productItem);
@@ -95,10 +95,11 @@ class PantryController extends AbstractController
         ]);
     }
 
+
     #[Route('/pantry/{id}', name: 'app_productItem')]
     public function showProductItem(Product $product): Response
     {
-        return $this->render('product_item_info.html.twig',
+        return $this->render('pantry/product_item_info.html.twig',
             ['product' => $product],
         );
     }

@@ -20,7 +20,7 @@ class ProductItem
 
     #[Assert\Type(type: Product::class)]
     #[Assert\Valid]
-    #[ORM\ManyToOne(inversedBy: 'productItems')]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'productItems')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product;
 
