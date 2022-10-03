@@ -74,5 +74,3 @@ If you have suggestions or questions, please feel free to
 open an issue on this repository. I will sincerely appreciate.
 
 ## Thanks!
-
-

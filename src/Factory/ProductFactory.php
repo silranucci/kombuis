@@ -41,6 +41,7 @@ final class ProductFactory extends ModelFactory
     {
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
+            'barcode' => self::faker()->ean8(),
             'brand' => self::faker()->word(),
             'daysIsGoodAfterOpening' => self::faker()->boolean(30) ? new \DateInterval('P10D') : null,
             'name' => self::faker()->word(),

@@ -3,7 +3,7 @@
 namespace App\Factory;
 
 use App\Entity\Furniture;
-use App\Repository\CabinetRepository;
+use App\Repository\FurnitureRepository;
 use Zenstruck\Foundry\RepositoryProxy;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
@@ -23,7 +23,7 @@ use Zenstruck\Foundry\Proxy;
  * @method static Furniture[]|Proxy[] findBy(array $attributes)
  * @method static Furniture[]|Proxy[] randomSet(int $number, array $attributes = [])
  * @method static Furniture[]|Proxy[] randomRange(int $min, int $max, array $attributes = [])
- * @method static CabinetRepository|RepositoryProxy repository()
+ * @method static FurnitureRepository|RepositoryProxy repository()
  * @method Furniture|Proxy create(array|callable $attributes = [])
  */
 final class FurnitureFactory extends ModelFactory

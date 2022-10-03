@@ -27,7 +27,7 @@ class ProductItem
     #[ORM\Column]
     private ?int $quantity = 0;
 
-    #[ORM\ManyToOne(inversedBy: 'productItems')]
+    #[ORM\ManyToOne(cascade: ['persist'] ,inversedBy: 'productItems')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Shelf $shelf;
 

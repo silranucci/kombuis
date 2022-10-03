@@ -18,11 +18,11 @@ class Furniture
     #[ORM\Column(length: 100, nullable: false)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'cabinets')]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'furnitures')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Room $room = null;
 
-    #[ORM\OneToMany(mappedBy: 'cabinet', targetEntity: Shelf::class)]
+    #[ORM\OneToMany(mappedBy: 'furniture', targetEntity: Shelf::class)]
     private Collection $shelves;
 
     public function __construct()

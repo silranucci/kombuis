@@ -36,8 +36,18 @@ class PantryController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $data = $form->getData();
 
-            /** @var Product $product */
-            $product = $data['product'];
+            /** @var ProductItem $productItem $product */
+            $productItem = $data['productItem'];
+            $product = $productItem->getProduct();
+            $existingProduct = $entityManager
+                ->getRepository(Product::class)
+                ->findOneBy(["barCode" => $product->getBarCode()]);
+
+            if($existingProduct)
+            {
+                $product = $existingProduct;
+            }
+
             $product->addProductItem($data['productItem']);
 
             $entityManager->persist($product);
@@ -99,7 +109,7 @@ class PantryController extends AbstractController
     #[Route('/pantry/{id}', name: 'app_productItem')]
     public function showProductItem(Product $product): Response
     {
-        return $this->render('pantry/product_item_info.html.twig',
+        return $this->render('pantry/product_item_list.html.twig',
             ['product' => $product],
         );
     }

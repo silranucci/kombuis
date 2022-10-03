@@ -14,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Furniture[]    findAll()
  * @method Furniture[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CabinetRepository extends ServiceEntityRepository
+class FurnitureRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
