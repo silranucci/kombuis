@@ -7,7 +7,10 @@ use App\Entity\ProductItem;
 use App\Form\AddProductFormType;
 use App\Form\ProductItemType;
 use App\Form\ProductType;
+use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -83,6 +86,22 @@ class PantryController extends AbstractController
 
     }
 
+    #[Route('/pantry/delete/{id}', name: 'app_remove_product')]
+    public function deleteProduct(Product $product, EntityManagerInterface $entityManager): RedirectResponse
+    {
+        $entityManager->remove($product);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_pantry_homepage');
+    }
+
+    #[Route('/pantry/items/{id}', name: 'app_productItem')]
+    public function showProductItem(Product $product): Response
+    {
+        return $this->render('pantry/product_item_list.html.twig',
+            ['product' => $product],
+        );
+    }
 
     #[Route('/pantry/edit-item/{id}', name: 'app_edit_product_item')]
     public function editProductItem(ProductItem $productItem, Request $request, EntityManagerInterface $entityManager)
@@ -105,12 +124,11 @@ class PantryController extends AbstractController
         ]);
     }
 
-
-    #[Route('/pantry/{id}', name: 'app_productItem')]
-    public function showProductItem(Product $product): Response
+    #Todo - Delete Product Item
+    public function deleteItems()
     {
-        return $this->render('pantry/product_item_list.html.twig',
-            ['product' => $product],
-        );
+        return null;
     }
+
+
 }

@@ -29,7 +29,7 @@ class Product
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductItem::class, cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductItem::class, cascade: ['persist'], orphanRemoval: true)]
     #[ORM\OrderBy(['useByDate' => 'ASC'])]
     private Collection $productItems;
 
