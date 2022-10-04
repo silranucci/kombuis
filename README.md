@@ -54,6 +54,12 @@ Make sure you have [Docker](https://docs.docker.com/get-started/#download-and-in
 docker-compose up
 ```
 
+**Load Fixture Data**
+
+```
+symfony console doctrine:fixtures:load
+```
+
 Now check out the site at `http://localhost:8000`
 
 Have fun!
