@@ -7,8 +7,6 @@ use App\Entity\ProductItem;
 use App\Form\AddProductFormType;
 use App\Form\ProductItemType;
 use App\Form\ProductType;
-use App\Repository\ProductRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +20,8 @@ class PantryController extends AbstractController
     public function show(EntityManagerInterface $entityManager): Response
     {
         $repository = $entityManager->getRepository(Product::class);
-        $products = $repository->findBy([], ['name' => 'ASC']);
+        $products = $repository->findProductInAscendingOrder();
+        //$products = $repository->findBy([], ['name' => 'ASC']);
 
         return $this->render('/pantry/product_list.html.twig',
             ['products' => $products]
@@ -34,12 +33,12 @@ class PantryController extends AbstractController
     public function addNewProduct(Request $request, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(AddProductFormType::class);
-
         $form->handleRequest($request);
+
         if($form->isSubmitted() && $form->isValid()){
             $data = $form->getData();
 
-            /** @var ProductItem $productItem $product */
+            /** @var ProductItem $productItem */
             $productItem = $data['productItem'];
             $product = $productItem->getProduct();
             $existingProduct = $entityManager
@@ -68,10 +67,9 @@ class PantryController extends AbstractController
     public function editProduct(Product $product, Request $request, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ProductType::class, $product);
-
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
 
+        if($form->isSubmitted() && $form->isValid()){
             $entityManager->persist($product);
             $entityManager->flush();
 
@@ -83,7 +81,6 @@ class PantryController extends AbstractController
             'product' => $product,
             'form' => $form->createView(),
         ]);
-
     }
 
     #[Route('/pantry/delete/{id}', name: 'app_remove_product')]
@@ -107,10 +104,9 @@ class PantryController extends AbstractController
     public function editProductItem(ProductItem $productItem, Request $request, EntityManagerInterface $entityManager)
     {
         $form = $this->createForm(ProductItemType::class, $productItem);
-
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
 
+        if($form->isSubmitted() && $form->isValid()){
             $entityManager->persist($productItem);
             $entityManager->flush();
 
@@ -124,10 +120,13 @@ class PantryController extends AbstractController
         ]);
     }
 
-    #Todo - Delete Product Item
-    public function deleteItems()
+    #[Route('/pantry/delete-item/{id}', name: 'app_remove_item')]
+    public function deleteItems(ProductItem $productItem, EntityManagerInterface $entityManager): RedirectResponse
     {
-        return null;
+        $entityManager->remove($productItem);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_pantry_homepage');
     }
 
 

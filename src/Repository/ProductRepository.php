@@ -39,6 +39,19 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
+    // TODO - Add a method to avoid lazy loading in showing product list and productItem list
+    public function findProductInAscendingOrder()
+    {
+        return $this->createQueryBuilder('product')
+            ->orderBy('product.name', 'ASC')
+            ->innerJoin('product.productItems', 'productItems')
+            ->addSelect('productItems')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
 //    /**
 //     * @return Product[] Returns an array of Product objects
 //     */

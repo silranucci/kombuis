@@ -39,6 +39,14 @@ class ProductItemRepository extends ServiceEntityRepository
         }
     }
 
+
+
+    // TODO - Add a method to show only the first 10 products that have expiring productItems
+
+
+    // TODO - Add a method to show all the products that have expiring productItems
+
+
 //    /**
 //     * @return ProductItem[] Returns an array of ProductItem objects
 //     */
