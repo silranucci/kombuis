@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\ProductItem;
+use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,12 +41,39 @@ class ProductItemRepository extends ServiceEntityRepository
         }
     }
 
-
-
     // TODO - Add a method to show only the first 10 products that have expiring productItems
-
+    public function findFirstTenProductItemsExpiringWithinFifteenDays()
+    {
+        return $this->createQueryBuilder('productItem')
+            ->addCriteria(self::createExpiringCriteria())
+            ->orderBy('productItem.useByDate', 'ASC')
+            ->setMaxResults(10)
+            ->innerJoin('productItem.product', 'product')
+            ->addSelect('product')
+            ->getQuery()
+            ->getResult();
+    }
 
     // TODO - Add a method to show all the products that have expiring productItems
+    public function findAllProductItemsExpiringWithinFifteenDays()
+    {
+        return $this->createQueryBuilder('productItem')
+            ->addCriteria(self::createExpiringCriteria())
+            ->orderBy('productItem.useByDate', 'ASC')
+            ->innerJoin('productItem.product', 'product')
+            ->addSelect('product')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public static function createExpiringCriteria(): Criteria
+    {
+        return Criteria::create()
+            ->andWhere(Criteria::expr()->andX(
+                Criteria::expr()->lte('useByDate', Carbon::now()->addDays(15)),
+                Criteria::expr()->gte('useByDate', Carbon::now())
+            ));
+    }
 
 
 //    /**
@@ -71,4 +100,6 @@ class ProductItemRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
 }
+

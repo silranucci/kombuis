@@ -36,6 +36,21 @@ final class ProductFactory extends ModelFactory
         // TODO inject services if required (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services)
     }
 
+    public function setKilogram(): self
+    {
+        return $this->addState(['unitOfMeasure' => UnitOfMeasure::KILOGRAM]);
+    }
+
+    public function setMillilitre(): self
+    {
+        return $this->addState(['unitOfMeasure' => UnitOfMeasure::MILLILITRE]);
+    }
+
+    public function setUnit(): self
+    {
+        return $this->addState(['unitOfMeasure' => UnitOfMeasure::UNITS]);
+    }
+
 
     protected function getDefaults(): array
     {
