@@ -15,16 +15,24 @@
         {% endblock %}
     </head>
     <body>
-        {% block navbar %}
-            {% include 'header.html.twig' %}
-        {% endblock %}
+        <div class="container">
+            <div class="row">
+                {% block navbar %}
+                    {% include 'header.html.twig' %}
+                {% endblock %}
+            </div>
 
-        {% block main %}
+            <div class="row mt-5">
+                {% block main %}
 
-        {% endblock %}
+                {% endblock %}
+            </div>
 
-        {% block footer %}
-            {% include 'footer.html.twig' %}
-        {% endblock %}
+            <div class="row m-5">
+                {% block footer %}
+                    {% include 'footer.html.twig' %}
+                {% endblock %}
+            </div>
+        </div>
     </body>
 </html>
