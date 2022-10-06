@@ -16,7 +16,7 @@ class ProductItemQuantitySubscriber implements EventSubscriberInterface
             Events::postPersist,
 
             //remove quantity
-            //Events::postRemove,
+            Events::postRemove,
 
             //Two alternatives: add the difference or recalculate the total quantity
             //Events::postUpdate
@@ -39,6 +39,23 @@ class ProductItemQuantitySubscriber implements EventSubscriberInterface
 
             $args->getObjectManager()->flush();
 
+        }
+    }
+
+    public function postRemove(LifecycleEventArgs $args): void
+    {
+        $entity = $args->getObject();
+
+        if($entity instanceof ProductItem)
+        {
+            $quantity = $entity->getQuantity();
+            $currentTotalQuantity = $entity->getProduct()->getTotalQuantity();
+
+            $updatedTotalQuantity = $currentTotalQuantity - $quantity;
+
+            $entity->getProduct()->setTotalQuantity($updatedTotalQuantity);
+
+            $args->getObjectManager()->flush();
         }
     }
 

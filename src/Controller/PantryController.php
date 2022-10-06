@@ -121,7 +121,7 @@ class PantryController extends AbstractController
     }
 
     #[Route('/pantry/delete-item/{id}', name: 'app_remove_item')]
-    public function deleteItems(ProductItem $productItem, EntityManagerInterface $entityManager): RedirectResponse
+    public function deleteItem(ProductItem $productItem, EntityManagerInterface $entityManager): RedirectResponse
     {
         $entityManager->remove($productItem);
         $entityManager->flush();
