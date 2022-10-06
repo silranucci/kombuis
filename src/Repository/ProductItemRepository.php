@@ -41,7 +41,7 @@ class ProductItemRepository extends ServiceEntityRepository
         }
     }
 
-    // TODO - Add a method to show only the first 10 products that have expiring productItems
+    // TODO - Refactoring
     public function findFirstTenProductItemsExpiringWithinFifteenDays()
     {
         return $this->createQueryBuilder('productItem')
@@ -54,7 +54,7 @@ class ProductItemRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    // TODO - Add a method to show all the products that have expiring productItems
+    // TODO - Refactoring
     public function findAllProductItemsExpiringWithinFifteenDays()
     {
         return $this->createQueryBuilder('productItem')
@@ -74,6 +74,8 @@ class ProductItemRepository extends ServiceEntityRepository
                 Criteria::expr()->gte('useByDate', Carbon::now())
             ));
     }
+
+    // TODO - Fix Lazy Loading while showing product item list
 
 
 //    /**
