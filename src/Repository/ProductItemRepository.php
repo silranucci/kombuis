@@ -52,8 +52,7 @@ class ProductItemRepository extends ServiceEntityRepository
 
     public function findAllProductItemsExpiringWithinFifteenDays()
     {
-        return $this->createQueryBuilder('productItem')
-
+        return $this->addProductItemsExpiringWithinFifteenDaysOrderedByUrgency()
             ->getQuery()
             ->getResult();
     }
