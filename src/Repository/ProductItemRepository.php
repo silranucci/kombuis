@@ -6,6 +6,7 @@ use App\Entity\ProductItem;
 use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -41,27 +42,18 @@ class ProductItemRepository extends ServiceEntityRepository
         }
     }
 
-    // TODO - Refactoring
     public function findFirstTenProductItemsExpiringWithinFifteenDays()
     {
-        return $this->createQueryBuilder('productItem')
-            ->addCriteria(self::createExpiringCriteria())
+        return $this->addProductItemsExpiringWithinFifteenDaysOrderedByUrgency()
             ->orderBy('productItem.useByDate', 'ASC')
-            ->setMaxResults(10)
-            ->innerJoin('productItem.product', 'product')
-            ->addSelect('product')
             ->getQuery()
             ->getResult();
     }
 
-    // TODO - Refactoring
     public function findAllProductItemsExpiringWithinFifteenDays()
     {
         return $this->createQueryBuilder('productItem')
-            ->addCriteria(self::createExpiringCriteria())
-            ->orderBy('productItem.useByDate', 'ASC')
-            ->innerJoin('productItem.product', 'product')
-            ->addSelect('product')
+
             ->getQuery()
             ->getResult();
     }
@@ -73,6 +65,22 @@ class ProductItemRepository extends ServiceEntityRepository
                 Criteria::expr()->lte('useByDate', Carbon::now()->addDays(15)),
                 Criteria::expr()->gte('useByDate', Carbon::now())
             ));
+    }
+
+    private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
+    {
+        return $queryBuilder ?: $this->createQueryBuilder('productItem');
+    }
+
+    private function addProductItemsExpiringWithinFifteenDaysOrderedByUrgency(
+        QueryBuilder $queryBuilder = null
+    ): QueryBuilder
+    {
+       return $this->getOrCreateQueryBuilder($queryBuilder)
+           ->addCriteria(self::createExpiringCriteria())
+           ->orderBy('productItem.useByDate', 'ASC')
+           ->innerJoin('productItem.product', 'product')
+           ->addSelect('product');
     }
 
     // TODO - Fix Lazy Loading while showing product item list
