@@ -8,7 +8,6 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use function Sodium\add;
 
 class ProductItemType extends AbstractType
 {
@@ -22,11 +21,18 @@ class ProductItemType extends AbstractType
                 'widget' => 'single_text',
                 'required' => false,
             ])
-            ->add('quantity', null, [
+            ->add('quantity', IntegerType::class, [
                 'required' => false,
+                'attr' => [
+                    'min' => 0
+                ]
             ])
-            ->add('product', ProductType::class)
-            ->add('shelf', ShelfType::class);
+            ->add('product', ProductType::class, [
+                'label' => false
+            ])
+            ->add('shelf', ShelfType::class, [
+                'label' => false
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

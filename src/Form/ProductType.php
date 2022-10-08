@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Product;
+use App\Enumerations\UnitOfMeasure;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,17 +16,43 @@ class ProductType extends AbstractType
     {
         $builder
             //->add('product', ) TODO - Can i use this to create a product and productItem object?
-            ->add('barCode')
-            ->add('name')
-            ->add('brand')
-            ->add('unitOfMeasure', UnitOfMeasureType::class)
+            ->add('barCode', null, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'enter the barcode'
+                ]
+            ])
+            ->add('name', null, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'enter the name of the product'
+                ]
+            ])
+            ->add('brand', null, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'enter the brand name'
+                ]
+            ])
+            ->add('unitOfMeasure', EnumType::class, [
+                'class' => UnitOfMeasure::class,
+                'label' => false
+            ])
             ->add('daysIsGoodAfterOpening', null,
                 [
+                    'label' => false,
                     'with_years' => false,
                     'with_months' => false,
+                    'attr' => [
+                        'placeholder' => 'enter the period after opening'
+                    ]
                 ])
             ->add('safetyStock', IntegerType::class, [
-                'label' => 'Set the minimum amount that you want to have in your pantry',
+                'label' => false,
+                'attr' => [
+                    'min' => 0,
+                    'placeholder' => 'enter the safety stock amount'
+                ]
             ]);
     }
 

@@ -13,7 +13,9 @@ class FurnitureType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('room', RoomType::class);
+            ->add('room', RoomType::class, [
+                'label' => false
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

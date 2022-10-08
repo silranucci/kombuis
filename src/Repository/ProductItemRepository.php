@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Product;
 use App\Entity\ProductItem;
 use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -45,7 +46,6 @@ class ProductItemRepository extends ServiceEntityRepository
     public function findFirstTenProductItemsExpiringWithinFifteenDays()
     {
         return $this->addProductItemsExpiringWithinFifteenDaysOrderedByUrgency()
-            ->orderBy('productItem.useByDate', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -83,7 +83,6 @@ class ProductItemRepository extends ServiceEntityRepository
     }
 
     // TODO - Fix Lazy Loading while showing product item list
-
 
 //    /**
 //     * @return ProductItem[] Returns an array of ProductItem objects
