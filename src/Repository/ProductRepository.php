@@ -51,6 +51,15 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findProductUnderSafetyStock()
+    {
+        return $this->createQueryBuilder('product')
+            ->andWhere('product.totalQuantity < product.safetyStock')
+            ->orderBy('product.totalQuantity', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 
 //    /**
 //     * @return Product[] Returns an array of Product objects

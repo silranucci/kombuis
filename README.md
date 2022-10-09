@@ -4,10 +4,12 @@
 
 It is the manager of your kitchen.
 
+At this stage it allow you to:
+- keep track of the foods in your pantry (how much and where they are)
+
 It will allow you to:
-- keep track of the foods in your pantry (how much and where they are), 
 - manage the weekly menu 
-- make a shopping list based on the missing ingredientsin your pantry necessary to cook a given recipe. 
+- make a shopping list based on the missing ingredients in your pantry necessary to cook a given recipe. 
 
 > **NOTE**: It is intended as a purely personal project and with self-teaching purposes (at least for now). 
 > If you need a real ERP system, use [Grocy](https://grocy.info/).

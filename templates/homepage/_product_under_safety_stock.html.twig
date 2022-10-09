@@ -1,0 +1,16 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Brand</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for product in productUnderSafetyStock %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.brand }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
