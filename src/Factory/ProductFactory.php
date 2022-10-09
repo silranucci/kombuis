@@ -3,7 +3,7 @@
 namespace App\Factory;
 
 use App\Entity\Product;
-use App\Enumerations\UnitOfMeasure;
+use App\Enum\UnitOfMeasure;
 use App\Repository\ProductRepository;
 use Zenstruck\Foundry\RepositoryProxy;
 use Zenstruck\Foundry\ModelFactory;

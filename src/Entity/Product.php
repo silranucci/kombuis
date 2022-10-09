@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Enumerations\UnitOfMeasure;
+use App\Enum\UnitOfMeasure;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -40,7 +40,7 @@ class Product
     #[ORM\Column]
     private ?int $totalQuantity = 0;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(type: 'string', length: 50)]
     private ?string $unitOfMeasure = null;
 
     public function __construct()

@@ -4,7 +4,7 @@ namespace App\Tests\Entity;
 
 use App\Entity\Product;
 use App\Entity\ProductItem;
-use App\Enumerations\UnitOfMeasure;
+use App\Enum\UnitOfMeasure;
 use PHPUnit\Framework\TestCase;
 
 class ProductTest extends TestCase

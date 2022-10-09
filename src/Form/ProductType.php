@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Product;
-use App\Enumerations\UnitOfMeasure;
+use App\Enum\UnitOfMeasure;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -34,8 +34,7 @@ class ProductType extends AbstractType
                     'placeholder' => 'enter the brand name'
                 ]
             ])
-            ->add('unitOfMeasure', EnumType::class, [
-                'class' => UnitOfMeasure::class,
+            ->add('unitOfMeasure', UnitOfMeasureType::class, [
                 'label' => false
             ])
             ->add('daysIsGoodAfterOpening', null,

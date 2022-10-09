@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enumerations;
+namespace App\Enum;
 
 enum UnitOfMeasure: string
 {
