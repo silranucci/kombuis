@@ -82,7 +82,22 @@ class ProductItemRepository extends ServiceEntityRepository
            ->addSelect('product');
     }
 
-    // TODO - Fix Lazy Loading while showing product item list
+    public function findProductItems(int $id): array
+    {
+        return $this->createQueryBuilder('productItem')
+            ->andWhere('productItem.product = :id')
+            ->innerJoin('productItem.product', 'product')
+            ->innerJoin('productItem.shelf', 'shelf')
+            ->innerJoin('shelf.furniture', 'furniture')
+            ->innerJoin('furniture.room', 'room')
+            ->addSelect('product')
+            ->addSelect('shelf')
+            ->addSelect('furniture')
+            ->addSelect('room')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return ProductItem[] Returns an array of ProductItem objects

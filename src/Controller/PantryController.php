@@ -7,6 +7,7 @@ use App\Entity\ProductItem;
 use App\Form\AddProductFormType;
 use App\Form\ProductItemType;
 use App\Form\ProductType;
+use App\Repository\ProductItemRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -93,10 +94,12 @@ class PantryController extends AbstractController
     }
 
     #[Route('/pantry/items/{id}', name: 'app_productItem')]
-    public function showProductItem(Product $product): Response
+    public function showProductItem(int $id, ProductItemRepository $productItemRepository): Response
     {
+        $productItems = $productItemRepository->findProductItems($id);
+
         return $this->render('pantry/product_item_list.html.twig',
-            ['product' => $product],
+            ['productItems' => $productItems],
         );
     }
 

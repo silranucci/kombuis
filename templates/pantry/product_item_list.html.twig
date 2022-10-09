@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-    <h1>Product: {{ product.name }}</h1>
+    <h1>Product: {# productItems.product.name #}</h1>
 
     <table class="table">
         <thead>
@@ -17,7 +17,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for productItem in product.productItems %}
+        {% for productItem in productItems %}
         <tr>
             <th scope="row">{{ productItem.id}}</th>
             <td>{{ productItem.quantity }}</td>
