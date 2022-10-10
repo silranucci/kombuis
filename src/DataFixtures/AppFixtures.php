@@ -7,6 +7,7 @@ use App\Factory\ProductFactory;
 use App\Factory\ProductItemFactory;
 use App\Factory\RoomFactory;
 use App\Factory\ShelfFactory;
+use App\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -37,5 +38,8 @@ class AppFixtures extends Fixture
                 'shelf' => $shelves[array_rand($shelves)],
             ];
         });
+
+        UserFactory::createOne(['email' => 'che_admin@example.com']);
+        UserFactory::createMany(10);
     }
 }
