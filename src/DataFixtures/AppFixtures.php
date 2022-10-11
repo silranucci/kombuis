@@ -39,7 +39,7 @@ class AppFixtures extends Fixture
             ];
         });
 
-        UserFactory::createOne(['email' => 'che_admin@example.com']);
+        UserFactory::createOne(['email' => 'che_admin@example.com', 'firstName' => 'Gioia']);
         UserFactory::createMany(10);
     }
 }
