@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
@@ -17,10 +18,12 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
 class LoginFormAuthenticator extends AbstractAuthenticator
 {
+    private UserRepository $userRepository;
     private RouterInterface $router;
 
-    public function __construct(RouterInterface $router)
+    public function __construct(RouterInterface $router, UserRepository $userRepository)
     {
+        $this->userRepository = $userRepository;
         $this->router = $router;
      }
 
@@ -33,10 +36,16 @@ class LoginFormAuthenticator extends AbstractAuthenticator
     {
         $email = $request->request->get('email');
         $password = $request->request->get('password');
-
         return new Passport(
-            new UserBadge($email),
-            new CustomCredentials(function ($credentials, User $user){
+            new UserBadge($email, function($userIdentifier) {
+                // optionally pass a callback to load the User manually
+                $user = $this->userRepository->findOneBy(['email' => $userIdentifier]);
+                if (!$user) {
+                    throw new UserNotFoundException();
+                }
+                return $user;
+            }),
+            new CustomCredentials(function($credentials, User $user) {
                 return $credentials === 'tada';
             }, $password)
         );
