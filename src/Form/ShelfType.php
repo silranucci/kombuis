@@ -15,7 +15,7 @@ class ShelfType extends AbstractType
         $builder
             ->add('shelfNumber')
             ->add('furniture', FurnitureType::class, [
-                'label' => false
+                'label' => 'Furniture name'
             ]);
     }
 

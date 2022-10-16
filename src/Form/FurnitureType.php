@@ -12,10 +12,10 @@ class FurnitureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('room', RoomType::class, [
-                'label' => false
-            ]);
+            ->add('name', null, [
+                'label' => 'Furniture name'
+            ])
+            ->add('room', RoomType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

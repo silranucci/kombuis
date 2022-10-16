@@ -19,7 +19,7 @@ class ProductItemType extends AbstractType
             ])
             ->add('openingDate', DateType::class, [
                 'widget' => 'single_text',
-                'required' => false,
+                'label' => 'Opening Date'
             ])
             ->add('quantity', IntegerType::class, [
                 'required' => false,
@@ -31,7 +31,7 @@ class ProductItemType extends AbstractType
                 'label' => false
             ])
             ->add('shelf', ShelfType::class, [
-                'label' => false
+                'label' => 'Location Info'
             ]);
     }
 

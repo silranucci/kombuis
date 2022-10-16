@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\Product;
 use App\Enum\UnitOfMeasure;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,40 +19,30 @@ class ProductType extends AbstractType
         $builder
             //->add('product', ) TODO - Can i use this to create a product and productItem object?
             ->add('barCode', null, [
-                'label' => false,
-                'attr' => [
-                    'placeholder' => 'enter the barcode'
-                ]
+                'label' => 'Barcode',
             ])
             ->add('name', null, [
-                'label' => false,
-                'attr' => [
-                    'placeholder' => 'enter the name of the product'
-                ]
+                'label' => 'Name',
             ])
             ->add('brand', null, [
-                'label' => false,
-                'attr' => [
-                    'placeholder' => 'enter the brand name'
-                ]
+                'label' => 'Brand',
             ])
             ->add('unitOfMeasure', UnitOfMeasureType::class, [
-                'label' => false
+                'label' => 'Unit of measure'
             ])
-            ->add('daysIsGoodAfterOpening', null,
+            ->add('daysIsGoodAfterOpening', DateIntervalType::class,
                 [
+                    'labels' => [
+                        'days' => 'Days is good after opening'
+                    ],
                     'label' => false,
                     'with_years' => false,
                     'with_months' => false,
-                    'attr' => [
-                        'placeholder' => 'enter the period after opening'
-                    ]
                 ])
             ->add('safetyStock', IntegerType::class, [
-                'label' => false,
+                'label' => 'Safety stock',
                 'attr' => [
-                    'min' => 0,
-                    'placeholder' => 'enter the safety stock amount'
+                    'min' => 0
                 ]
             ]);
     }

@@ -3,8 +3,20 @@
 {% block main %}
     <h1>Add new product</h1>
 
-    {{ include('pantry/_form.html.twig',
-        {'button' : 'Add Product'}
-    )
-    }}
+    {{ form_start(newProductForm) }}
+        {{ form_row(newProductForm.productItem.product.barCode) }}
+        {{ form_row(newProductForm.productItem.product.name) }}
+        {{ form_row(newProductForm.productItem.product.brand) }}
+        {{ form_row(newProductForm.productItem.quantity) }}
+        {{ form_row(newProductForm.productItem.product.unitOfMeasure) }}
+        {{ form_row(newProductForm.productItem.product.safetyStock) }}
+        {{ form_row(newProductForm.productItem.useByDate) }}
+        {{ form_row(newProductForm.productItem.product.daysIsGoodAfterOpening ) }}
+        {{ form_row(newProductForm.productItem.openingDate) }}
+        {{ form_row(newProductForm.productItem.shelf.furniture.room.name) }}
+        {{ form_row(newProductForm.productItem.shelf.furniture.name) }}
+        {{ form_row(newProductForm.productItem.shelf.shelfNumber) }}
+
+        <button type="submit" class="btn btn-primary">Add!</button>
+    {{ form_end(newProductForm) }}
 {% endblock %}

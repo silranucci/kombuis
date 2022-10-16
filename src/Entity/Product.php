@@ -18,8 +18,8 @@ class Product
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::INTEGER, unique: true)]
-    private ?int $barCode = null;
+    #[ORM\Column(length: 13, unique: true)]
+    private ?string $barCode = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $brand = null;

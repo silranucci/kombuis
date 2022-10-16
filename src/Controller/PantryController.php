@@ -62,7 +62,7 @@ class PantryController extends AbstractController
         }
 
         return $this->render('pantry/product_new.html.twig', [
-            'form' => $form->createView(),
+            'newProductForm' => $form->createView(),
         ]);
     }
 
