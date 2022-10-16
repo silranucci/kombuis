@@ -27,6 +27,9 @@ class ProductItemType extends AbstractType
                     'min' => 0
                 ]
             ])
+            ->add('product', ProductType::class, [
+                'label' => false
+            ])
             ->add('shelf', ShelfType::class, [
                 'label' => 'Location Info'
             ]);

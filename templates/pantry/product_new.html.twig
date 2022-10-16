@@ -4,14 +4,14 @@
     <h1>Add new product</h1>
 
     {{ form_start(newProductForm) }}
-        {{ form_row(newProductForm.product.barCode) }}
-        {{ form_row(newProductForm.product.name) }}
-        {{ form_row(newProductForm.product.brand) }}
+        {{ form_row(newProductForm.productItem.product.barCode) }}
+        {{ form_row(newProductForm.productItem.product.name) }}
+        {{ form_row(newProductForm.productItem.product.brand) }}
         {{ form_row(newProductForm.productItem.quantity) }}
-        {{ form_row(newProductForm.product.unitOfMeasure) }}
-        {{ form_row(newProductForm.product.safetyStock) }}
+        {{ form_row(newProductForm.productItem.product.unitOfMeasure) }}
+        {{ form_row(newProductForm.productItem.product.safetyStock) }}
         {{ form_row(newProductForm.productItem.useByDate) }}
-        {{ form_row(newProductForm.product.daysIsGoodAfterOpening ) }}
+        {{ form_row(newProductForm.productItem.product.daysIsGoodAfterOpening ) }}
         {{ form_row(newProductForm.productItem.openingDate) }}
         {{ form_row(newProductForm.productItem.shelf.furniture.room.name) }}
         {{ form_row(newProductForm.productItem.shelf.furniture.name) }}
