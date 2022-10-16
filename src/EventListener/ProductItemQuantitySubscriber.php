@@ -14,7 +14,7 @@ class ProductItemQuantitySubscriber implements EventSubscriberInterface
     {
         return[
             Events::postPersist,
-            Events::postRemove,
+            Events::preRemove,
             Events::postUpdate,
         ];
     }
@@ -36,7 +36,8 @@ class ProductItemQuantitySubscriber implements EventSubscriberInterface
         }
     }
 
-    public function postRemove(LifecycleEventArgs $args): void
+
+    public function preRemove(LifecycleEventArgs $args): void
     {
         $entity = $args->getObject();
 

@@ -1,12 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-    <h1>Product: {# productItems.product.name #}</h1>
+    <h1>Product: {{ productName }}</h1>
 
-    <table class="table">
+    <table class="table table-hover">
         <thead>
         <tr>
-            <th scope="col">#</th>
             <th scope="col">Quantity</th>
             <th scope="col">Use By Date</th>
             <th scope="col">Room</th>
@@ -19,7 +18,6 @@
         <tbody>
         {% for productItem in productItems %}
         <tr>
-            <th scope="row">{{ productItem.id}}</th>
             <td>{{ productItem.quantity }}</td>
             <td>{{ productItem.useByDate| date('d-m-Y') }}</td>
             <td>{{ productItem.shelf.furniture.room.name }}</td>

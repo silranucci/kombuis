@@ -99,10 +99,12 @@ class PantryController extends AbstractController
     public function showProductItem(int $id, ProductItemRepository $productItemRepository): Response
     {
         $productItems = $productItemRepository->findProductItems($id);
+        $productName = $productItems[0]->getProduct()->getName();
 
-        return $this->render('pantry/product_item_list.html.twig',
-            ['productItems' => $productItems],
-        );
+        return $this->render('pantry/product_item_list.html.twig', [
+            'productItems' => $productItems,
+            'productName' => $productName
+        ]);
     }
 
     #[Route('/pantry/edit-item/{id}', name: 'app_edit_product_item')]

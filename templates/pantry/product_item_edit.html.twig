@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-    <h1>Edit {{ productItem.product.name}}</h1>
+    <h1>Edit {{ productItem.product.name }}</h1>
 
-    {{ include('pantry/_form.html.twig',
-        {'button' : 'Update'}
-    )
-    }}
+    {{ form_start(form) }}
+        {{ form_row(form.quantity)}}
+        {{ form_row(form.useByDate) }}
+        {{ form_row(form.openingDate) }}
+        {{ form_row(form.shelf)  }}
 
+
+    <button type="submit" class="btn btn-primary">Add!</button>
+    {{ form_end(form) }}
 {% endblock %}
