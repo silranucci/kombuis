@@ -86,6 +86,7 @@ class ProductItemRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('productItem')
             ->andWhere('productItem.product = :id')
+            ->andWhere('productItem.quantity > 0')
             ->innerJoin('productItem.product', 'product')
             ->innerJoin('productItem.shelf', 'shelf')
             ->innerJoin('shelf.furniture', 'furniture')

@@ -14,7 +14,6 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
         <div class="container">
             <div class="row">
                 {% block navbar %}
@@ -22,17 +21,15 @@
                 {% endblock %}
             </div>
 
-            <div class="row mt-2">
+                <div class="row mt-2">
                 {% block main %}
 
                 {% endblock %}
-            </div>
-
+                </div>
             <div class="row mt-5">
                 {% block footer %}
                     {% include 'footer.html.twig' %}
                 {% endblock %}
             </div>
         </div>
-    </body>
 </html>
